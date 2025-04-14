@@ -1,0 +1,71 @@
+.payment-container {
+    text-align: center;
+    padding-top: 80px;
+  }
+  
+  .amount-input {
+    padding: 10px;
+    width: 250px;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .pay-btn {
+    padding: 12px 25px;
+    background-color: #f59e0b;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* backdrop-filter: blur(5px); */
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  
+  .popup-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .flutterwave-btn,
+  .close-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .flutterwave-btn {
+    background: #0466c8;
+    color: white;
+  }
+  
+  .close-btn {
+    background: #ccc;
+  }
+  
+  .thank-you-popup .popup-box {
+    background-color: #f0fdf4;
+    border: 2px solid #22c55e;
+  }
+  

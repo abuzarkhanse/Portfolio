@@ -1,27 +1,55 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config();
 const axios = require("axios");
+const mongoose = require("mongoose");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.post("/pay", async (req, res) => {
-  const { cardNumber, holderName, expiry, cvv, amount, currency } = req.body;
+// Connect MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/payments", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+const Payment = mongoose.model("Payment", {
+  tx_ref: String,
+  transaction_id: String,
+  plan: String,
+  amount: Number,
+  verified: Boolean,
+  createdAt: { type: Date, default: Date.now },
+});
+
+// Flutterwave secret key
+const FLW_SECRET_KEY = "FLWSECK-xxxxxxxxxxxxxxxxx-X";
+
+app.post("/api/verify-payment", async (req, res) => {
+  const { transaction_id, tx_ref, amount, plan } = req.body;
 
   try {
-    // Here, you'd call Paymob (or another authentic gateway) API using real credentials.
-    // This is a mock for demonstration only.
-    console.log("Processing payment for", amount, currency);
+    const result = await axios.get(`https://api.flutterwave.com/v3/transactions/${transaction_id}/verify`, {
+      headers: {
+        Authorization: `Bearer ${FLW_SECRET_KEY}`,
+      },
+    });
 
-    // Simulate success
-    res.status(200).json({ message: "Payment successful!" });
+    const data = result.data.data;
+    const verified = data.status === "successful";
+
+    await Payment.create({
+      tx_ref,
+      transaction_id,
+      plan,
+      amount,
+      verified,
+    });
+
+    res.json({ success: true, verified, data });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Payment failed." });
+    console.error("Verification error:", err.response?.data || err);
+    res.status(500).json({ success: false });
   }
 });
 
-app.listen(5000, () => console.log("Backend server running on http://localhost:5000"));
+app.listen(5000, () => console.log("Server running on port 5000"));
