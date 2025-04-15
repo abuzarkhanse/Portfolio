@@ -44,9 +44,9 @@ const Navbar = () => {
         <li>
           <Link to="/contact">Contact</Link>
         </li>
-        <li>
+        {/* <li>
         <Link to="/payment">Payment</Link>
-        </li>
+        </li> */}
 
         <a href="/CvPic/my-cv.pdf" download>
             <button className="btn">Download CV</button>
