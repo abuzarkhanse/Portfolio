@@ -1,71 +1,147 @@
 .payment-container {
-    text-align: center;
-    padding-top: 80px;
+  text-align: center;
+  padding-top: 80px;
+  transition: filter 0.3s ease-in-out;
+}
+
+.payment-container.blur {
+  filter: blur(5px);
+  pointer-events: none;
+  -webkit-user-select: none; /* for Safari/Chrome */
+  -moz-user-select: none;    /* for Firefox */
+  -ms-user-select: none;     /* for IE/Edge */
+  user-select: none;
+}
+
+
+.amount-input {
+  padding: 12px;
+  width: 280px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.pay-btn {
+  padding: 12px 30px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pay-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal box */
+.payment-modal {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.4s ease;
+}
+
+.payment-modal h2 {
+  margin-bottom: 10px;
+}
+
+.modal-amount {
+  font-weight: bold;
+  margin: 15px 0;
+  font-size: 20px;
+  color: #16a34a;
+}
+
+.confirm-btn,
+.cancel-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background: #22c55e;
+  color: white;
+}
+
+.confirm-btn:hover {
+  background: #16a34a;
+}
+
+.cancel-btn {
+  background: #131619;
+  color: #ddd;
+}
+
+.cancel-btn:hover {
+  color: #ddd;
+  background: #272a2d;
+  border-radius: 50px;
+}
+
+.local-btn {
+  width: 100%;
+  background-color: #13120e;
+  color: #ebdddd;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.local-btn:hover {
+  background-color: #292721;
+  border-radius: 50px;
+}
+
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  .amount-input {
-    padding: 10px;
-    width: 250px;
-    font-size: 16px;
-    margin-bottom: 20px;
+  to {
+    transform: translateY(0px);
+    opacity: 1;
   }
-  
-  .pay-btn {
-    padding: 12px 25px;
-    background-color: #f59e0b;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
   }
-  
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* backdrop-filter: blur(5px); */
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
+  to {
+    background: rgba(0, 0, 0, 0.4);
   }
-  
-  .popup-box {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 320px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-  
-  .flutterwave-btn,
-  .close-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  .flutterwave-btn {
-    background: #0466c8;
-    color: white;
-  }
-  
-  .close-btn {
-    background: #ccc;
-  }
-  
-  .thank-you-popup .popup-box {
-    background-color: #f0fdf4;
-    border: 2px solid #22c55e;
-  }
-  
+}

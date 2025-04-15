@@ -5,9 +5,6 @@ import About from "./Routes/About";
 import Project from "./Routes/Project";
 import Contact from "./Routes/Contact";
 import DownloadCv from "./Routes/DownloadCv";
-import PaymentPage from "./Routes/PaymentPage";
-import PricingCards from "./components/PricingCards";
-// import Payment from "./Routes/Payment";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -20,8 +17,6 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/downloadcv" element={<DownloadCv />} />
-        <Route path="/Payment" element={<PaymentPage />} />
-        {/* <Route path="/payment" element={<Payment />} /> */}
       </Routes>
     </>
   );
