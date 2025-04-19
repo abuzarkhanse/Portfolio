@@ -7,26 +7,34 @@ const Form = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { name, email, message };
+    setLoading(true);
+    setSubmissionStatus(null);
 
-    axios
-      .post("http://localhost:5000/send-email", data)
-      .then((response) => {
-        if (response.status === 200) {
-          setName("");
-          setEmail("");
-          setMessage("");
-          setSubmissionStatus("Email sent successfully!");
-        } else {
-          setSubmissionStatus("Error occurred. Please try again.");
-        }
-      })
-      .catch(() => {
-        setSubmissionStatus("Error occurred. Please try again.");
+    try {
+      const response = await axios.post("http://localhost:5000/api/contact", {
+        name,
+        email,
+        message,
       });
+
+      if (response.status === 200) {
+        setSubmissionStatus("✅ Message sent successfully!");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setSubmissionStatus("❌ Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error.response || error);
+      setSubmissionStatus("❌ Error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,8 +45,8 @@ const Form = () => {
           type="text"
           placeholder="Enter your name"
           required
-          onChange={(e) => setName(e.target.value)}
           value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <label>Email:</label>
@@ -46,8 +54,8 @@ const Form = () => {
           type="email"
           placeholder="Enter your email"
           required
-          onChange={(e) => setEmail(e.target.value)}
           value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label>Message:</label>
@@ -55,14 +63,18 @@ const Form = () => {
           rows="6"
           placeholder="Type your message here"
           required
-          onChange={(e) => setMessage(e.target.value)}
           value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
 
-        <button className="btn">Submit</button>
+        <button className="btn" disabled={loading}>
+          {loading ? "Sending..." : "Submit"}
+        </button>
       </form>
 
-      {submissionStatus && <div className="submission-status">{submissionStatus}</div>}
+      {submissionStatus && (
+        <div className="submission-status">{submissionStatus}</div>
+      )}
     </div>
   );
 };

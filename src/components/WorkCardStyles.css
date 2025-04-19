@@ -47,15 +47,18 @@
     padding: 0.5rem 1rem;
 }
 
-
+@media screen and (max-width: 1200px) {
+    .project-container {
+        max-width: 90%;
+        margin: auto;
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
 @media screen and (max-width: 740px) {
-    .project-container{
+    .project-container {
         max-width: 90%;
         margin: auto;
         grid-template-columns: 1fr;
     } 
 }
-
-
-

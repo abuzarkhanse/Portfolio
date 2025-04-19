@@ -51,8 +51,16 @@
     background-color: #141414;
 }
 
+@media screen and (max-width: 1200px) {
+    .card-container {
+        max-width: 90%;
+        margin: auto;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media screen and (max-width: 740px) {
-    .card-container{
+    .card-container {
         max-width: 90%;
         margin: auto;
         grid-template-columns: 1fr;
