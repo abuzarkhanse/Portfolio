@@ -1,37 +1,36 @@
-const express = require('express');
-const axios = require('axios');
-
+const axios = require("axios");
+const express = require("express");
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-  const { name, email, message } = req.body;
-
-  if (!name || !email || !message) {
-    return res.status(400).json({ message: 'Missing required fields' });
-  }
-
-  const chatId = '6144143160';
-  const botToken = '7654084999:AAGI8c75B-k9orEIa3jD-q8jKVINCU6O8wc';
-  const text = `📬 *New Contact Form Submission*:\n\n👤 *Name*: ${name}\n📧 *Email*: ${email}\n📝 *Message*: ${message}`;
-
+router.post("/", async (req, res) => {
   try {
-    const telegramRes = await axios.post(
-      `https://api.telegram.org/bot${botToken}/sendMessage`,
-      {
-        chat_id: chatId,
-        text,
-        parse_mode: 'Markdown',
-      }
-    );
+    console.log("Incoming request body:", req.body); // ✅ log data
+    const { name, email, message } = req.body;
 
-    if (telegramRes.status === 200) {
-      return res.status(200).json({ message: 'Message sent successfully' });
-    } else {
-      return res.status(500).json({ message: 'Telegram error' });
-    }
-  } catch (err) {
-    console.error('Telegram send error:', err.message);
-    return res.status(500).json({ message: 'Failed to send to Telegram' });
+    const text = `
+📬 *New Contact Form Submission*:
+
+👤 *Name*: ${name}
+📧 *Email*: ${email}
+📝 *Message*: ${message}
+    `;
+
+    const chatId = process.env.CHAT_ID;
+    const botToken = process.env.BOT_TOKEN;
+
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    const response = await axios.post(url, {
+      chat_id: chatId,
+      text,
+      parse_mode: "Markdown",
+    });
+
+    console.log("Telegram response:", response.data); // ✅ log success
+    res.status(200).send("Message sent successfully");
+  } catch (error) {
+    console.error("Telegram send error:", error); // ✅ log error
+    res.status(500).send("❌ Error occurred. Please try again.");
   }
 });
 

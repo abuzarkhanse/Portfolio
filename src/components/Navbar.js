@@ -9,7 +9,6 @@ const Navbar = () => {
 
   const [color, setColor] = useState(false);
 
-  // Add useEffect to handle scroll listener and cleanup
   useEffect(() => {
     const changeColor = () => {
       if (window.scrollY >= 100) {

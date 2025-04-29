@@ -29,6 +29,9 @@ const Form = () => {
       } else {
         setSubmissionStatus("❌ Something went wrong. Please try again.");
       }
+      
+      setTimeout(() => setSubmissionStatus(null), 4000);
+      
     } catch (error) {
       console.error("Error sending message:", error.response || error);
       setSubmissionStatus("❌ Error occurred. Please try again.");
@@ -41,31 +44,13 @@ const Form = () => {
     <div className="form">
       <form autoComplete="off" onSubmit={handleSubmit}>
         <label>Your Name:</label>
-        <input
-          type="text"
-          placeholder="Enter your name"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <input type="text" placeholder="Enter your name" required value={name} onChange={(e) => setName(e.target.value)} />
 
         <label>Email:</label>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <input type="email" placeholder="Enter your email" required value={email} onChange={(e) => setEmail(e.target.value)} />
 
         <label>Message:</label>
-        <textarea
-          rows="6"
-          placeholder="Type your message here"
-          required
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+        <textarea rows="6" placeholder="Type your message here" required value={message} onChange={(e) => setMessage(e.target.value)} />
 
         <button className="btn" disabled={loading}>
           {loading ? "Sending..." : "Submit"}
@@ -73,8 +58,11 @@ const Form = () => {
       </form>
 
       {submissionStatus && (
-        <div className="submission-status">{submissionStatus}</div>
+        <div className={`toast ${submissionStatus.startsWith("✅") ? "success" : "error"}`}>
+          {submissionStatus}
+        </div>
       )}
+
     </div>
   );
 };
